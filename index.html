@@ -4,18 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝙉𝙖𝙩𝙝𝙖𝙣 𝙎𝘿𝙕 E-Commerce</title>
+    <title>𝙉𝙖𝙩𝙝𝙖𝙣 𝙎𝘿𝙕</title>
     <link rel="stylesheet" href="/estilos.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-md bg-black navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">ПΛƬΉΛП 𝙎𝘿𝙕 ᴱ⁻ᶜᵒᵐᵐᵉʳᶜᵉ</a>
+            <a class="navbar-brand" href="#">ПΛƬΉΛП 𝙎𝘿𝙕</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -51,216 +52,313 @@
                     </li>
 
                 </ul>
-                <form class="divs-facilidades" role="search">
-                    <input class="form-control me-8" type="search" placeholder="Pesquise" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-                </form>
-                <div class="nav-item fs-2"><i class="bi bi-cart2"></i></div>
-            
 
             </div>
         </div>
     </nav>
-    <div id="carouselExampleDark" class="carousel carousel-dark slide">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-                aria-label="Slide 1" aria-current="true"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"
-                class=""></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"
-                class=""></button>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#000000" fill-opacity="1"
+            d="M0,128L26.7,122.7C53.3,117,107,107,160,85.3C213.3,64,267,32,320,48C373.3,64,427,128,480,128C533.3,128,587,64,640,85.3C693.3,107,747,213,800,261.3C853.3,309,907,299,960,272C1013.3,245,1067,203,1120,186.7C1173.3,171,1227,181,1280,176C1333.3,171,1387,149,1413,138.7L1440,128L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z">
+        </path>
+    </svg>
+    
+    <div id="demo"></div>
+    <script type="module">
+        import { gsap } from "https://cdn.skypack.dev/gsap";
+        import { TextPlugin } from "https://cdn.skypack.dev/gsap/TextPlugin";
+        import { EasePack } from "https://cdn.skypack.dev/gsap/EasePack";
+
+        // Registrar os plugins
+        gsap.registerPlugin(TextPlugin, EasePack);
+
+        var container = document.getElementById("demo"),
+            _sentenceEndExp = /(\.|\?|!)$/g; // expressão regular para detectar fim de sentença
+
+        function machineGun(text) {
+            var words = text.split(" "),
+                tl = gsap.timeline({ delay: 0.6, repeat: 2, repeatDelay: 4 }),
+                wordCount = words.length,
+                time = 0,
+                word,
+                element,
+                duration,
+                isSentenceEnd,
+                i;
+
+            for (i = 0; i < wordCount; i++) {
+                word = words[i];
+                isSentenceEnd = _sentenceEndExp.test(word);
+                element = document.createElement("h3");
+                element.textContent = word;
+                container.appendChild(element);
+                duration = Math.max(0.5, word.length * 0.08); // palavras mais longas levam mais tempo, ajuste o tempo. Mínimo de 0.5 segundos.
+                if (isSentenceEnd) {
+                    duration += 0.6; // se for a última palavra de uma sentença, aumente o tempo para um efeito dramático.
+                }
+                // define a opacidade e escala inicialmente para 0. Configuramos z para 0.01 apenas para ativar a renderização 3D no navegador, o que faz com que as coisas sejam renderizadas de forma mais suave.
+                gsap.set(element, { autoAlpha: 0, scale: 0, z: 0.01 });
+                // Adiciona as animações para cada palavra
+                tl.to(element, {
+                    duration: duration,
+                    scale: 1.2,
+                    autoAlpha: 1,
+                    ease: "slow(0.25, 0.9)"
+                }, time)
+                    .to(element, {
+                        duration: duration,
+                        autoAlpha: 0,
+                        ease: "slow(0.25, 0.9)"
+                    }, time + duration);
+
+                time += duration;
+                if (isSentenceEnd) {
+                    time += 0.6; // no fim de uma sentença, adicione uma pausa para efeito dramático.
+                }
+            }
+        }
+
+        machineGun("3 anos na área de TI 3 anos como DEV e 2 anos como Suporte");
+    </script>
+
+    <div class="container text-center">
+        <!-- Contêiner da imagem de perfil -->
+        <div class="perfil-rede">
+          <img src="./imagens/eu.jpg" class="img-fluid foto-rede" alt="Foto de perfil">
+          <!-- Informações do perfil -->
+          <div class="nome-rede">
+            <h2>Nathan dos Santos Diniz</h2>
+            <h5>Desenvolvedor Full-Stack</h5>
+            <a>Java | Javascript | Node.JS | Python | React</a>
+            <a>Sistemas de Informação e Especialista em Gestão de Riscos e Cibersegurança</a>
+            <br>
+            <h2>Redes Sociais:</h2>
+          </div>
         </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-                <img src="./imagens/trabalhos.jpeg" class="img-fluid ">
-                <div class="carousel-caption text-bg-dark">
-                    <h5>Somos a Amazon dos Profissionais</h5>
-                    <p>Encontre uma variedade de profisionais de A a Z.</p>
-                </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-                <img src="./imagens/pagamentos.jpeg" class="img-fluid ">
-                   
-                <div class="carousel-caption text-bg-dark">
-                    <h5>Facilidade de Pagamentos</h5>
-                    <p>Aceitamos todos os meios de pagamentos</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="./imagens/atendimento.png" class="img-fluid ">
-                   
-                <div class="carousel-caption text-bg-dark">
-                    <h5>Atendimento Personalizado</h5>
-                    <p>Atendimento disponível 24h por 7 dias.</p>
-                </div>
-            </div>
+      </div>
+<br>
+    <div class="row mx-auto g-4">
+        <div class="plano-fundo col-12 col-md-4 col-xxl-6">
+            <svg version="1.1" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 200" xml:space="preserve"
+            style="max-width: 100%; height: auto;">
+            <!-- Letra N -->
+            <polyline fill="none" points="100,170 100,30 200,170 200,30" />
+        
+            <!-- Letra S -->
+            <path d="M300,30 C250,30 250,100 300,100 C350,100 350,170 300,170" fill="none" />
+        
+            <!-- Letra D -->
+            <path d="M400,30 L400,170 Q470,170 470,100 Q470,30 400,30" fill="none" />
+        
+            <!-- Letra Z -->
+            <polyline fill="none" points="600,30 500,170 700,170 600,30" />
+        </svg>
+        
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        <link href='//fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
+        <div class="col-12 col-md-4 col-xxl-6">
+    <h2>Desenvolvedor, Analista de Ti e Suporte</h2>
+    <ul>
+        <li>3 anos na are de TI, 3 anos como DEV e 2 anos como Suporte</li>
+        <li>Graduado em Sistemas de Informação</li>
+        <li>Pós-Graduado em Gestão de Riscos e Cibersegurança</li>
+        <li>Desenvolmento Web, Full-Stack</li>
+        <!-- <li><a href="https://codepen.io/GreenSock/pen/sxdfe">new version that groups words</a> -->
+    </ul>
     </div>
 
-    <h2 class="text-center">Navegue por categorias:</h2>
-    <div class="container row mx-auto g-4">
-        <div class="card col-6 col-md-4 col-xxl-2" >
-            <img src="./imagens/saude.png" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Saúde</h5>
+    </div>
 
+    <!-- Importe o GSAP e o plugin DrawSVGPlugin -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.1/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.1/dist/DrawSVGPlugin.min.js"></script>
+
+    <!-- Script para animação -->
+    <script>
+         var shapes = "polyline, path",
+        tl = gsap.timeline({ repeat: -1, yoyo: true });
+
+    tl.fromTo(shapes, { drawSVG: "0%" }, { duration: 2, drawSVG: "100%", stagger: 0.2 })
+        .to(shapes, { duration: 1, rotation: 360, scale: 0.5, stroke: "#FFFFFF", strokeWidth: 8, transformOrigin: "50% 50%" })
+        .to(shapes, { duration: 0.5, stroke: "#FF0000", scale: 1.5, opacity: 0, stagger: 0.2 });
+
+    </script>
+
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+        <h1 class="display-4 fw-bold text-body-emphasis">VS Code + Git</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s
+                most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system,
+                extensive prebuilt components, and powerful JavaScript plugins.</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Primary button</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
             </div>
         </div>
-        <div class="card col-6 col-md-4 col-xxl-2">
-            <img src="./imagens/eventos.jpeg" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Eventos</h5>
-
-            </div>
-        </div>
-        <div class="card col-6 col-md-4 col-xxl-2">
-            <img src="./imagens/cozinhadesenho.jpg" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Cozinha</h5>
-
-            </div>
-        </div>
-        <div class="card col-6 col-md-4 col-xxl-2">
-            <img src="./imagens/obras.jpeg" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Obras</h5>
-
-            </div>
-        </div>
-        <div class="card col-6 col-md-4 col-xxl-2">
-            <img src="./imagens/industria.jpeg" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Indústria</h5>
-
-            </div>
-        </div>
-        <div class="card col-6 col-md-4 col-xxl-2" >
-            <img src="./imagens/residencia.png" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Residencial</h5>
-
-            </div>
-        </div>
-        <div class="card col-6 col-md-4 col-xxl-2">
-            <img src="./imagens/limpeza.jpg" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Limpeza</h5>
-
-            </div>
-        </div>
-        <div class="card col-6 col-md-4 col-xxl-2">
-            <img src="./imagens/escritorio.jpg" class="img-thumbnail">
-                   
-            <div class="card-body">
-                <h5 class="card-title text-center">Escritório</h5>
-
+        <div class="overflow-hidden" style="max-height: 30vh;">
+            <div class="container px-5">
+                <img src="./imagens/vscode.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image"
+                    width="700" height="500" loading="lazy">
             </div>
         </div>
     </div>
-    <section class="pb-4 bg-black text-bg-dark">
-        <h2 class="text-center">Conheça nossas facilidades</h2>
-        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center gap-3 px-3">
-        <div class="divs-facilidades ">
-            <div class="text-center"><i class="bi bi-x-diamond fs-1"></i></div>
-            <div class="text-center">PIX</div>
-            <div class="text-center texto-menor">Pagamento Efetivado em até 5 minutos.</div>
-        </div>
-        <div class="divs-facilidades ">
-            <div class="text-center"><i class="bi bi-truck fs-1"></i></div>
-            <div class="text-center">Frete Grátis</div>
-            <div class="text-center texto-menor">Frete Grátis mais rápido para todo o Brasil.</div>
-        </div>
-        <div class="divs-facilidades ">
-            <div class="text-center"><i class="bi bi-credit-card fs-1"></i></div>
-            <div class="text-center">Cartão de Crédito</div>
-            <div class="text-center texto-menor">Aceitamos todos os cartões de crédito</div>
-        </div>
-        </div>
-    </section>
-    <h2 class="text-center">Em Destaque:</h2>
-    <div class="container row mx-auto g-4">
-        <div class="col-12 col-md-4 col-xxl-3">
-            <div class="card text-center">
-                <img src="./imagens/diarista.jpeg" class="img-fluid ">
-                   
-                <div class="card-body">
-                    <h5 class="card-title">Diarista</h5>
-                    <p class="card-text">Limpeza pesada de qualidade, com equipe especialista no assunto.</p>
-                    <p class="card-text">A partir de R$ 149,99</p>
-                    <a href="#" class="btn btn-primary">Adicionar ao carrinho</a>
+
+    <div class="container px-4 py-5" id="icon-grid">
+        <h2 class="pb-2 border-bottom">Habilidades</h2>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-hdd-network" viewBox="0 0 16 16">
+                    <path d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8.5v3a1.5 1.5 0 0 1 1.5 1.5h5.5a.5.5 0 0 1 0 1H10A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5H.5a.5.5 0 0 1 0-1H6A1.5 1.5 0 0 1 7.5 10V7H2a2 2 0 0 1-2-2zm1 0v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1m6 7.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Infra-estrutura</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-terminal" viewBox="0 0 16 16">
+                    <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9M3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708z"/>
+                    <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Back-end</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-window-fullscreen" viewBox="0 0 16 16">
+                    <path d="M3 3.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                    <path d="M.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5zM1 5V2h14v3zm0 1h14v8H1z"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Front-end</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">BI</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-pc-display" viewBox="0 0 16 16">
+                    <path d="M8 1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1zm1 13.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0m2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0M9.5 1a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM9 3.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1h-5a.5.5 0 0 0-.5.5M1.5 2A1.5 1.5 0 0 0 0 3.5v7A1.5 1.5 0 0 0 1.5 12H6v2h-.5a.5.5 0 0 0 0 1H7v-4H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5H7V2z"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Analise de Sistemas</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-window-split" viewBox="0 0 16 16">
+                    <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                    <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1zM1 13V6h6.5v8H2a1 1 0 0 1-1-1m7.5 1V6H15v7a1 1 0 0 1-1 1z"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">UX/UI Design</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
+                    <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
+                    <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Automações</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <svg class="bi text-body-secondary flex-shrink-0 me-3" xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-shield-check" viewBox="0 0 16 16">
+                    <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                    <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                  </svg>
+                <div>
+                    <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Gestão de Riscos e Cibersegurança</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading.</p>
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-4 col-xxl-3">
-            <div class="card text-center">
-                <img src="./imagens/cozinha.jpeg" class="img-thumbnail">
-                   
-                <div class="card-body">
-                    <h5 class="card-title">Chef de Cozinha</h5>
-                    <p class="card-text">Chef exclusivo e com uma vasta diversificação culinária.</p>
-                    <p class="card-text"> A partir de R$ 349,99</p>
-                    <a href="#" class="btn btn-primary">Adicionar ao carrinho</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-4 col-xxl-3">
-            <div class="card text-center">
-                <img src="./imagens/enfermeira.jpeg" class="img-fluid ">
-                   
-                <div class="card-body">
-                    <h5 class="card-title">Enfermeira</h5>
-                    <p class="card-text">Primeiros cuidados, acompamento de pacientes e troca de medicação</p>
-                    <p class="card-text">A partir de R$ 349,99</p>
-                    <a href="#" class="btn btn-primary">Adicionar ao carrinho</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-4 col-xxl-3">
-            <div class="card text-center">
-                <img src="./imagens/atentente.jpeg" class="img-fluid ">
-                   
-                <div class="card-body">
-                    <h5 class="card-title">Atendente</h5>
-                    <p class="card-text">Equipe especializada para Vendas e Cobranças.</p>
-                    <p class="card-text">A partir de R$ 249,99</p>
-                    <a href="#" class="btn btn-primary">Adicionar ao carrinho</a>
-                </div>
-            </div>
-        </div>
-
-
-
     </div>
+
+    
 
    
-    <form class="border border-secondary m-3 p-3 text-center">
-        <h5>Quer receber nossas novidades, promoções exclusivas e 10% OFF na primeira compra? Cadastre-se!</h5>
-        <div class="input-group my-3">
-          <input type="email" class="form-control border-secondary rounded-0" placeholder="Digite seu e-mail" aria-label="Digite seu e-mail" aria-describedby="button-addon2" /> 
-    <button type="button" id="button-addon2">Enviar</button>
-        </div>
-      </form>
 
+
+
+    <h2 class="text-center">Projetos:</h2>
+    <div class="container row mx-auto g-4">
+        <div class="col-12 col-md-4 col-xxl-3">
+            <div class="card text-center">
+                <img src="./imagens/icons8-java-480.png" class="img-fluid ">
+
+                <div class="card-body">
+                    <h5 class="card-title">Java</h5>
+                    <p class="card-text">.</p>
+                    <a href="#" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-xxl-3">
+            <div class="card text-center">
+                <img src="./imagens/icons8-nodejs-480.png" class="img-thumbnail">
+
+                <div class="card-body">
+                    <h3 class="card-title">Node.JS</h3>
+                    <p class="card-text">.</p>
+                    <a href="#" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-xxl-3">
+            <div class="card text-center">
+                <img src="./imagens/icons8-python-480.png" class="img-fluid ">
+
+                <div class="card-body">
+                    <h5 class="card-title">Python</h5>
+                    <p class="card-text"> .</p>
+                    <a href="#" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-xxl-3">
+            <div class="card text-center">
+                <img src="./imagens/icons8-reagir-400.png" class="container-fluid ">
+
+                <div class="card-body">
+                    <h5 class="card-title">React</h5>
+                    <p class="card-text">.</p>
+                    <a href="#" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+   
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#000000" fill-opacity="1"
+            d="M0,256L24,266.7C48,277,96,299,144,298.7C192,299,240,277,288,272C336,267,384,277,432,240C480,203,528,117,576,106.7C624,96,672,160,720,197.3C768,235,816,245,864,240C912,235,960,213,1008,213.3C1056,213,1104,235,1152,218.7C1200,203,1248,149,1296,117.3C1344,85,1392,75,1416,69.3L1440,64L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z">
+        </path>
+    </svg>
     <footer class="text-center bg-black text-bg-dark">
-        <p class="py-3">2024 <i class="bi bi-c-circle"></i> Desenvolvido por Nathan SDZ | Todos os direitos Reservados.</p>
+        <p class="py-3">2024 <i class="bi bi-c-circle"></i> Desenvolvido por Nathan SDZ | Todos os direitos Reservados.
+        </p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

@@ -1,6 +1,89 @@
+
 .texto-menor{
     font-size: 13px;
 }
 .divs-facilidades{
     width: 325px;
 }
+.perfil-rede {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(11, 144, 178, 0.1)); /* Gradiente de preto para transparente */
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    backdrop-filter: blur(10px); /* Aplicar desfoque */
+    -webkit-backdrop-filter: blur(10px); /* Para compatibilidade com navegadores baseados no WebKit */
+  }
+  
+  .foto-rede {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #fff; /* Borda branca */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+  }
+  
+  .nome-rede {
+    color: #4e4c4c;
+    margin-top: 10px;
+  }
+
+body{
+	background-color:#111;
+  color:white;
+  
+}
+#demo{
+  position:relative;
+  max-width:800px;
+  height:300px;
+  background-color:#0000;
+  margin:auto;
+  overflow:hidden;
+}
+
+#demo h3 {
+  position:absolute;
+  font-family: 'Asap', sans-serif;
+  font-weight:700;
+  margin:0;
+  padding:0;
+  width:100%;
+  text-align:center;
+  visibility:hidden;
+  font-size:120px;
+  top:65px;
+}
+h2 {
+  color:#9af600;
+  margin-left:24px;
+  margin-bottom:0px;
+}
+li {
+  font-family: 'Asap', sans-serif;
+  color:#999;
+  margin-bottom:10px;
+}
+
+a:link, a:visited, a:active{
+  color:#f60;
+}
+
+#slider {
+
+    background-color: #222;
+    display: inline-block;
+  }
+  
+  #slider, #slider a {
+    background-image: none;
+    border: 1px solid #555;
+  }
+  #slider a {
+    background-color: #444;
+  }
+  .plano-fundo{
+    background-color:black;
+  text-align:center;
+  color: #777;
+  }
